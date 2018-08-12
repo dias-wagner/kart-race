@@ -10,9 +10,11 @@ import org.junit.Test;
 public class KartRaceTest {
 
     @Test
-    public void testGetRaceResults() throws IOException {
+    public void testRace() throws IOException {
         final String projectDir = System.getProperty("user.dir");
         KartRace kartRace = new KartRace(Paths.get(projectDir + "/target/classes/race-log.txt"));
+
+        kartRace.runRace();
 
         List<PilotStats> raceResults = kartRace.getRaceResults();
 
@@ -51,5 +53,15 @@ public class KartRaceTest {
         Assert.assertEquals("S.VETTEL", raceResults.get(5).getPilotName());
         Assert.assertEquals(3, raceResults.get(5).getLapsCompleted());
         Assert.assertEquals("00:06:27.276", raceResults.get(5).getTotalRaceTime().toString());
+
+        Assert.assertEquals("23:51:14.216 038 F.MASSA              3 00:01:02.769 44,334", kartRace.getBestLap().toString());
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testRaceNoRun() throws IOException {
+        final String projectDir = System.getProperty("user.dir");
+        KartRace kartRace = new KartRace(Paths.get(projectDir + "/target/classes/race-log.txt"));
+
+        kartRace.getRaceResults();
     }
 }

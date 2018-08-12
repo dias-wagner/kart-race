@@ -23,6 +23,9 @@ public class KartRace {
     /** Maps pilot codes to pilot race stats */
     private Map<String, PilotStats> raceStats;
 
+    private List<PilotStats> raceResults;
+    private LogLine bestLap;
+
     /** 
      * Constructor. Initialization of structures. 
      * 
@@ -34,12 +37,10 @@ public class KartRace {
         this.raceStats = new HashMap<>();
     }
 
-    /** 
-     * Get the race results. 
-     * 
-     * @return the list of the pilot race stats, ordered by position
+    /**
+     * Runs the race
      */
-    public List<PilotStats> getRaceResults() {
+    public void runRace() {
         System.out.printf("Processando arquivo de log da corrida...\n");
         lines
             // here we parse the log lines to LogLine objects
@@ -70,13 +71,17 @@ public class KartRace {
                         pilotStats.setBestLap(logLine.getLap());
                         pilotStats.setBestLapTime(logLine.getLapTime());
                     }
+                    // Also register the log line representing the best lap of the race
+                    if (this.bestLap == null || logLine.getLapTime().isBefore(bestLap.getLapTime())) {
+                        this.bestLap = logLine;
+                    }
                 }
             });
 
         
         AtomicInteger position = new AtomicInteger();
 
-        return raceStats.values().stream()
+        this.raceResults = raceStats.values().stream()
             // sort pilot stats based on natural order of ascending total race time
             .sorted()
             // update position
@@ -85,5 +90,23 @@ public class KartRace {
                 return pilotStats;
             })
             .collect(Collectors.toList());
+    }
+    
+    /** 
+     * Get the race results. 
+     * 
+     * @return the list of the pilot race stats, ordered by position
+     */
+    public List<PilotStats> getRaceResults() {
+        if (this.raceResults == null)
+            throw new IllegalStateException("A corrida ainda não começou!");
+        return this.raceResults;
+    }
+
+    /**
+     * @return the log line of the best lap of the race
+     */
+    public LogLine getBestLap() {
+        return this.bestLap;
     }
 }

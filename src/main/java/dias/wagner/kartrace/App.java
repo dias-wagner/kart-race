@@ -21,9 +21,16 @@ public final class App {
 
         try {
             KartRace kartRace = new KartRace(Paths.get(args[0]));
-            List<PilotStats> raceResults = kartRace.getRaceResults();
 
+            kartRace.runRace();
+
+            List<PilotStats> raceResults = kartRace.getRaceResults();
+            
+            System.out.println("Resultado da corrida:");
             raceResults.forEach(pilotStats -> System.out.println(pilotStats));
+
+            System.out.println("\nMelhor volta da corrida:");
+            System.out.println(kartRace.getBestLap());
         } catch(IOException exception) {
             System.err.printf("Erro ao abrir o arquivo '%s'.\n", args[0]);
             System.exit(2);
