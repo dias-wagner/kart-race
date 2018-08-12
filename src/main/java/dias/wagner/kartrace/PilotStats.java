@@ -150,6 +150,14 @@ public class PilotStats implements Comparable<PilotStats> {
      */
     @Override
     public int compareTo(PilotStats other) {
+        if (this.lapsCompleted > other.lapsCompleted) {
+            return -1;
+        }
+        
+        if (this.lapsCompleted < other.lapsCompleted) {
+            return 1;
+        }
+
         if (this.totalRaceTime.equals(other.totalRaceTime)) {
             return 0;
         }

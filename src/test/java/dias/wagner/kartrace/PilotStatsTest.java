@@ -59,7 +59,7 @@ public class PilotStatsTest {
     }
 
     @Test
-    public void testCompareToEqual() {
+    public void testCompareToEqualSameLap() {
         LocalTime hour = LocalTime.of(10, 0);
         LocalTime lapTime = LocalTime.of(0, 1, 30);
         
@@ -72,7 +72,7 @@ public class PilotStatsTest {
     }
 
     @Test
-    public void testCompareToThis() {
+    public void testCompareToSameLapThis() {
         LocalTime hour = LocalTime.of(10, 0);
         LocalTime lapTime = LocalTime.of(0, 1, 30);
         
@@ -86,12 +86,40 @@ public class PilotStatsTest {
     }
 
     @Test
-    public void testCompareToOther() {
+    public void testCompareToSameLapOther() {
         LocalTime hour = LocalTime.of(10, 0);
         LocalTime lapTime = LocalTime.of(0, 1, 30);
         
         LogLine line1 = new LogLine(hour, "000", "W.DIAS", 1, lapTime, 3.14f);
         LogLine line2 = new LogLine(hour, "000", "W.DIAS", 1, lapTime.minus(1, ChronoUnit.MINUTES), 3.14f);
+
+        PilotStats stats1 = new PilotStats(line1);
+        PilotStats stats2 = new PilotStats(line2);
+        
+        Assert.assertEquals(1, stats1.compareTo(stats2));
+    }
+
+    @Test
+    public void testCompareToEqualDiffLapsThis() {
+        LocalTime hour = LocalTime.of(10, 0);
+        LocalTime lapTime = LocalTime.of(0, 1, 30);
+        
+        LogLine line1 = new LogLine(hour, "000", "W.DIAS", 2, lapTime, 3.14f);
+        LogLine line2 = new LogLine(hour, "000", "W.DIAS", 1, lapTime, 3.14f);
+
+        PilotStats stats1 = new PilotStats(line1);
+        PilotStats stats2 = new PilotStats(line2);
+        
+        Assert.assertEquals(-1, stats1.compareTo(stats2));
+    }
+
+    @Test
+    public void testCompareToEqualDiffLapsOther() {
+        LocalTime hour = LocalTime.of(10, 0);
+        LocalTime lapTime = LocalTime.of(0, 1, 30);
+        
+        LogLine line1 = new LogLine(hour, "000", "W.DIAS", 1, lapTime, 3.14f);
+        LogLine line2 = new LogLine(hour, "000", "W.DIAS", 2, lapTime, 3.14f);
 
         PilotStats stats1 = new PilotStats(line1);
         PilotStats stats2 = new PilotStats(line2);
