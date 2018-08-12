@@ -13,6 +13,7 @@ public class PilotStats implements Comparable<PilotStats> {
     private LocalTime totalRaceTime;
     private int bestLap;
     private LocalTime bestLapTime;
+    private float avgSpeed;
 
     /**
      * Constructor. Initializes the object from a log line. The idea is to use the first line
@@ -27,6 +28,7 @@ public class PilotStats implements Comparable<PilotStats> {
         this.totalRaceTime = logLine.getLapTime();
         this.bestLap = logLine.getLap();
         this.bestLapTime = logLine.getLapTime();
+        this.avgSpeed = logLine.getAvgLapSpeed();
     }
 
     /**
@@ -128,6 +130,20 @@ public class PilotStats implements Comparable<PilotStats> {
     }
 
     /**
+     * @return the average speed
+     */
+    public float getAvgSpeed() {
+        return avgSpeed;
+    }
+
+    /**
+     * @param avgSpeed the average speed to set
+     */
+    public void setAvgSpeed(float avgSpeed) {
+        this.avgSpeed = avgSpeed;
+    }
+
+    /**
      * The {@link Comparable#compareTo(PilotStats)} implementation, ordering by {@link #getTotalRaceTime()}.
      * 
      * @param other the {@link PilotStats} object to compare to.
@@ -143,11 +159,11 @@ public class PilotStats implements Comparable<PilotStats> {
     /**
      * @return a string representing these pilot stats in the order {@link #getPosition()}, {@link #getPilotCode()}, 
      * {@link #getPilotName()}, {@link #getLapsCompleted()}, {@link #getTotalRaceTime()}, {@link #getBestLap()},
-     * {@link #getBestLapTime()}.
+     * {@link #getBestLapTime()}, {@link #getAvgSpeed()}.
      */
     public String toString() {
-        return String.format("%d %3s %-20s %d %12s %d %12s",
-            this.position, this.pilotCode, this.pilotName, this.lapsCompleted, 
-            this.totalRaceTime.toString(), this.bestLap, this.bestLapTime.toString());
+        return String.format("%d %3s %-20s %d %12s %d %12s %.3f",
+            this.position, this.pilotCode, this.pilotName, this.lapsCompleted, this.totalRaceTime.toString(), 
+            this.bestLap, this.bestLapTime.toString(), this.avgSpeed);
     }
 }

@@ -66,15 +66,21 @@ public class KartRace {
                         .plusSeconds(logLine.getLapTime().getSecond())
                         .plusNanos(logLine.getLapTime().getNano())
                     );
-                    // ... and verify if this lap is the pilot's best lap
+                    // ... and verify if this lap is the pilot's best lap (bonus 1)
                     if (logLine.getLapTime().isBefore(pilotStats.getBestLapTime())) {
                         pilotStats.setBestLap(logLine.getLap());
                         pilotStats.setBestLapTime(logLine.getLapTime());
                     }
-                    // Also register the log line representing the best lap of the race
+                    // Also register the log line representing the best lap of the race (bonus 2)...
                     if (this.bestLap == null || logLine.getLapTime().isBefore(bestLap.getLapTime())) {
                         this.bestLap = logLine;
                     }
+                    // ... and calculate the pilot's overall average speed (bonus 3)
+                    // The formula is avgSpeed = lapsCompleted * distance / totalRaceTime = lapsCompleted * avgLapSpeed * lapTime / totalRaceTime
+                    float distance = logLine.getAvgLapSpeed() * logLine.getLapTime().toNanoOfDay();
+                    pilotStats.setAvgSpeed(
+                        (float) pilotStats.getLapsCompleted() * distance / (float) pilotStats.getTotalRaceTime().toNanoOfDay() 
+                    );
                 }
             });
 
