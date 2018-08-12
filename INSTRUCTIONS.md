@@ -33,3 +33,9 @@ Followed by the best lap of the race in the format:
 ```mvn clean package -Pjacoco```
 
 Coverage report: ${project.build.directory}/site/jacoco/index.html 
+
+## All at once: build, execute, coverage
+
+```mvn clean package exec:java -Pjacoco```
+
+Coverage report: ${project.build.directory}/site/jacoco/index.html 
