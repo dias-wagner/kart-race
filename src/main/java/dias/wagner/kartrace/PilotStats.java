@@ -166,4 +166,27 @@ public class PilotStats implements Comparable<PilotStats> {
             this.position, this.pilotCode, this.pilotName, this.lapsCompleted, this.totalRaceTime.toString(), 
             this.bestLap, this.bestLapTime.toString(), this.avgSpeed);
     }
+
+    /**
+     * @param winnerRaceTime the winner race time
+     * @return a string representing these pilot stats in the order {@link #getPosition()}, {@link #getPilotCode()}, 
+     * {@link #getPilotName()}, {@link #getLapsCompleted()}, {@link #getTotalRaceTime()}, {@link #getBestLap()},
+     * {@link #getBestLapTime()}, {@link #getAvgSpeed()}, and the time diff from the winner.
+     */
+    public String toString(LocalTime winnerRaceTime) {
+        LocalTime diff = LocalTime.of(
+            this.totalRaceTime.getHour(),
+            this.totalRaceTime.getMinute(),
+            this.totalRaceTime.getSecond(),
+            this.totalRaceTime.getNano()
+        );
+
+        diff = diff
+            .minusHours(winnerRaceTime.getHour())
+            .minusMinutes(winnerRaceTime.getMinute())
+            .minusSeconds(winnerRaceTime.getSecond())
+            .minusNanos(winnerRaceTime.getNano());
+        
+        return this.toString() + " +" + diff;
+    }
 }

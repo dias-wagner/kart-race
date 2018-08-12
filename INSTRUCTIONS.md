@@ -17,6 +17,7 @@ The format of the output is a table with the columns:
 * Total Race Time
 * Best Lap
 * Best Lap Time
+* Time Difference to winner racer
 
 Followed by the best lap of the race in the format:
 

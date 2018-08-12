@@ -47,6 +47,18 @@ public class PilotStatsTest {
     }
 
     @Test
+    public void testToStringWithDiff() {
+        LocalTime hour = LocalTime.of(10, 0);
+        LocalTime lapTime = LocalTime.of(0, 2, 30);
+        
+        LogLine line = new LogLine(hour, "000", "W.DIAS", 1, lapTime, 3.14f);
+
+        PilotStats stats = new PilotStats(line);
+
+        Assert.assertEquals("0 000 W.DIAS               1     00:02:30 1     00:02:30 3,140 +00:01:10", stats.toString(LocalTime.of(0, 1, 20)));
+    }
+
+    @Test
     public void testCompareToEqual() {
         LocalTime hour = LocalTime.of(10, 0);
         LocalTime lapTime = LocalTime.of(0, 1, 30);

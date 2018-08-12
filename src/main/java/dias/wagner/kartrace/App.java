@@ -25,9 +25,10 @@ public final class App {
             kartRace.runRace();
 
             List<PilotStats> raceResults = kartRace.getRaceResults();
-            
+            PilotStats bestPilotStats = raceResults.get(0);
+
             System.out.println("Resultado da corrida:");
-            raceResults.forEach(pilotStats -> System.out.println(pilotStats));
+            raceResults.forEach(pilotStats -> System.out.println(pilotStats.toString(bestPilotStats.getTotalRaceTime())));
 
             System.out.println("\nMelhor volta da corrida:");
             System.out.println(kartRace.getBestLap());
