@@ -58,10 +58,18 @@ public class KartRaceTest {
     }
 
     @Test(expected=IllegalStateException.class)
-    public void testRaceNoRun() throws IOException {
+    public void testGetRaceResultsNoRun() throws IOException {
         final String projectDir = System.getProperty("user.dir");
         KartRace kartRace = new KartRace(Paths.get(projectDir + "/target/classes/race-log.txt"));
 
         kartRace.getRaceResults();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testGetBestLapNoRun() throws IOException {
+        final String projectDir = System.getProperty("user.dir");
+        KartRace kartRace = new KartRace(Paths.get(projectDir + "/target/classes/race-log.txt"));
+
+        kartRace.getBestLap();
     }
 }

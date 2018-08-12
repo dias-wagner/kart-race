@@ -113,6 +113,9 @@ public class KartRace {
      * @return the log line of the best lap of the race
      */
     public LogLine getBestLap() {
+        if (this.bestLap == null) {
+            throw new IllegalStateException("A corrida ainda não começou!");
+        } 
         return this.bestLap;
     }
 }
