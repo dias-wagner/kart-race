@@ -11,6 +11,8 @@ public class PilotStats implements Comparable<PilotStats> {
     private String pilotName;
     private int lapsCompleted;
     private LocalTime totalRaceTime;
+    private int bestLap;
+    private LocalTime bestLapTime;
 
     /**
      * Constructor. Initializes the object from a log line. The idea is to use the first line
@@ -23,6 +25,8 @@ public class PilotStats implements Comparable<PilotStats> {
         this.pilotName = logLine.getPilotName();
         this.lapsCompleted = logLine.getLap();
         this.totalRaceTime = logLine.getLapTime();
+        this.bestLap = logLine.getLap();
+        this.bestLapTime = logLine.getLapTime();
     }
 
     /**
@@ -33,7 +37,7 @@ public class PilotStats implements Comparable<PilotStats> {
     }
 
     /**
-     * @param the position to set
+     * @param position the position to set
      */
     public void setPosition(int position) {
         this.position = position;
@@ -47,7 +51,7 @@ public class PilotStats implements Comparable<PilotStats> {
     }
 
     /**
-     * @param the pilot code to set
+     * @param pilotCode the pilot code to set
      */
     public void setPilotCode(String pilotCode) {
         this.pilotCode = pilotCode;
@@ -61,7 +65,7 @@ public class PilotStats implements Comparable<PilotStats> {
     }
 
     /**
-     * @param the pilot name to set
+     * @param pilotName the pilot name to set
      */
     public void setPilotName(String pilotName) {
         this.pilotName = pilotName;
@@ -89,10 +93,38 @@ public class PilotStats implements Comparable<PilotStats> {
     }
 
     /**
-     * @param the total race time to set
+     * @param totalRaceTime the total race time to set
      */
     public void setTotalRaceTime(LocalTime totalRaceTime) {
         this.totalRaceTime = totalRaceTime;
+    }
+
+    /**
+     * @return the best lap
+     */
+    public int getBestLap() {
+        return this.bestLap;
+    }
+
+    /**
+     * @param bestLap the best lap to set
+     */
+    public void setBestLap(int bestLap) {
+        this.bestLap = bestLap;
+    }
+
+    /**
+     * @return the best lap time
+     */
+    public LocalTime getBestLapTime() {
+        return this.bestLapTime;
+    }
+
+    /**
+     * @param bestLapTime the best lap time to set
+     */
+    public void setBestLapTime(LocalTime bestLapTime) {
+        this.bestLapTime = bestLapTime;
     }
 
     /**
@@ -110,10 +142,12 @@ public class PilotStats implements Comparable<PilotStats> {
 
     /**
      * @return a string representing these pilot stats in the order {@link #getPosition()}, {@link #getPilotCode()}, 
-     * {@link #getPilotName()}, {@link #getLapsCompleted()}, {@link #getTotalRaceTime()}.
+     * {@link #getPilotName()}, {@link #getLapsCompleted()}, {@link #getTotalRaceTime()}, {@link #getBestLap()},
+     * {@link #getBestLapTime()}.
      */
     public String toString() {
-        return String.format("%d %3s %-20s %d %12s",
-            this.position, this.pilotCode, this.pilotName, this.lapsCompleted, this.totalRaceTime.toString());
+        return String.format("%d %3s %-20s %d %12s %d %12s",
+            this.position, this.pilotCode, this.pilotName, this.lapsCompleted, 
+            this.totalRaceTime.toString(), this.bestLap, this.bestLapTime.toString());
     }
 }

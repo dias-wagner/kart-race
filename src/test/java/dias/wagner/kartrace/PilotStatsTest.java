@@ -29,6 +29,8 @@ public class PilotStatsTest {
         Assert.assertEquals("J.AFONSO", stats.getPilotName());
         Assert.assertEquals(4, stats.getLapsCompleted());
         Assert.assertEquals(hour, stats.getTotalRaceTime());
+        Assert.assertEquals(line.getLap(), stats.getBestLap());
+        Assert.assertEquals(line.getLapTime(), stats.getBestLapTime());
     }
 
     @Test
@@ -40,7 +42,7 @@ public class PilotStatsTest {
 
         PilotStats stats = new PilotStats(line);
 
-        Assert.assertEquals("0 000 W.DIAS               1     00:01:30", stats.toString());
+        Assert.assertEquals("0 000 W.DIAS               1     00:01:30 1     00:01:30", stats.toString());
     }
 
     @Test

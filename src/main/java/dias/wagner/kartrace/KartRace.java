@@ -57,14 +57,19 @@ public class KartRace {
                     // update the PilotStats for the current pilot
                     PilotStats pilotStats = raceStats.get(logLine.getPilotCode());
                     
-                    // since we receive the logLines in order, lapsCompleted must receive the current lap
+                    // since we receive the logLines in order, lapsCompleted must receive the current lap, ...
                     pilotStats.setLapsCompleted(logLine.getLap());
-                    // add the current lap time to pilot's total race time
+                    // ... the current lap time to pilot's total race time...
                     pilotStats.setTotalRaceTime(pilotStats.getTotalRaceTime()
                         .plusMinutes(logLine.getLapTime().getMinute())
                         .plusSeconds(logLine.getLapTime().getSecond())
                         .plusNanos(logLine.getLapTime().getNano())
                     );
+                    // ... and verify if this lap is the pilot's best lap
+                    if (logLine.getLapTime().isBefore(pilotStats.getBestLapTime())) {
+                        pilotStats.setBestLap(logLine.getLap());
+                        pilotStats.setBestLapTime(logLine.getLapTime());
+                    }
                 }
             });
 
