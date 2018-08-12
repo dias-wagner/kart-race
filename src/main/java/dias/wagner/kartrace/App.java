@@ -1,12 +1,17 @@
 package dias.wagner.kartrace;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * Application entry point. 
+ */
 public final class App {
     
+    /**
+     * @param args expects the race log path as an argument.
+     */
     public static void main(String[] args) throws IOException {
         
         if (args.length != 1) {
@@ -14,10 +19,8 @@ public final class App {
             System.exit(1);
         }
 
-        Path path = Paths.get(args[0]);
-        
         try {
-            KartRace kartRace = new KartRace(path);
+            KartRace kartRace = new KartRace(Paths.get(args[0]));
             List<PilotStats> raceResults = kartRace.getRaceResults();
 
             raceResults.forEach(pilotStats -> System.out.println(pilotStats));

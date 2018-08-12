@@ -2,6 +2,9 @@ package dias.wagner.kartrace;
 
 import java.time.LocalTime;
 
+/**
+ * Represents the pilot stats.
+ */
 public class PilotStats implements Comparable<PilotStats> {
     private int position;
     private String pilotCode;
@@ -9,6 +12,12 @@ public class PilotStats implements Comparable<PilotStats> {
     private int lapsCompleted;
     private LocalTime totalRaceTime;
 
+    /**
+     * Constructor. Initializes the object from a log line. The idea is to use the first line
+     * of a pilot to construct this object in order to correctly compute the race results.
+     * 
+     * @param logLine a log line
+     */
     public PilotStats(LogLine logLine) {
         this.pilotCode = logLine.getPilotCode();
         this.pilotName = logLine.getPilotName();
@@ -16,46 +25,81 @@ public class PilotStats implements Comparable<PilotStats> {
         this.totalRaceTime = logLine.getLapTime();
     }
 
+    /**
+     * @return the finish position
+     */
     public int getPosition() {
         return this.position;
     }
 
+    /**
+     * @param the position to set
+     */
     public void setPosition(int position) {
         this.position = position;
     }
 
+    /**
+     * @return the pilot code
+     */
     public String getPilotCode() {
         return this.pilotCode;
     }
 
+    /**
+     * @param the pilot code to set
+     */
     public void setPilotCode(String pilotCode) {
         this.pilotCode = pilotCode;
     }
 
+    /**
+     * @return the pilot name
+     */
     public String getPilotName() {
         return this.pilotName;
     }
 
+    /**
+     * @param the pilot name to set
+     */
     public void setPilotName(String pilotName) {
         this.pilotName = pilotName;
     }
 
+    /**
+     * @return laps completed
+     */
     public int getLapsCompleted() {
         return this.lapsCompleted;
     }
 
+    /**
+     * @param lapsCompleted number of laps completed to set
+     */
     public void setLapsCompleted(int lapsCompleted) {
         this.lapsCompleted = lapsCompleted;
     }
 
+    /**
+     * @return the total race time
+     */
     public LocalTime getTotalRaceTime() {
         return this.totalRaceTime;
     }
 
+    /**
+     * @param the total race time to set
+     */
     public void setTotalRaceTime(LocalTime totalRaceTime) {
         this.totalRaceTime = totalRaceTime;
     }
 
+    /**
+     * The {@link Comparable#compareTo(PilotStats)} implementation, ordering by {@link #getTotalRaceTime()}.
+     * 
+     * @param other the {@link PilotStats} object to compare to.
+     */
     @Override
     public int compareTo(PilotStats other) {
         if (this.totalRaceTime.equals(other.totalRaceTime)) {
@@ -64,6 +108,10 @@ public class PilotStats implements Comparable<PilotStats> {
         return this.totalRaceTime.isBefore(other.totalRaceTime) ? -1 : 1;
     }
 
+    /**
+     * @return a string representing these pilot stats in the order {@link #getPosition()}, {@link #getPilotCode()}, 
+     * {@link #getPilotName()}, {@link #getLapsCompleted()}, {@link #getTotalRaceTime()}.
+     */
     public String toString() {
         return String.format("%d %3s %-20s %d %12s",
             this.position, this.pilotCode, this.pilotName, this.lapsCompleted, this.totalRaceTime.toString());

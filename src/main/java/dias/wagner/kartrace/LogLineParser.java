@@ -5,6 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parses a string into a race log line.
+ */
 public class LogLineParser {
 
     private static final DateTimeFormatter HOUR_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
@@ -31,6 +34,12 @@ public class LogLineParser {
     private static final int LAP_TIME_MILLIS_GROUP = 8;
     private static final int AVG_SPEED_GROUP = 9;
 
+    /**
+     * Parses a string to a race log line.
+     * 
+     * @param line the string representing the race log line.
+     * @return a {@link LogLine} object representing the race log line.
+     */
     public LogLine parseLine(String line) {
         Pattern pattern = Pattern.compile(LINE_PATTERN);
         Matcher matcher = pattern.matcher(line);
